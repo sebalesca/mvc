@@ -1,0 +1,75 @@
+﻿@model AplicationMVC2.ViewModels.AltaPersonaVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Alta Persona</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <div class=" container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h4>Nueva Persona</h4>
+                    </div>
+                    <div class="card-body">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label " })
+                                  
+                                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                    
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Edad, htmlAttributes: new { @class = "control-label " })
+                                    
+                                        @Html.EditorFor(model => model.Edad, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Edad, "", new { @class = "text-danger" })
+                                    
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label " })
+                                   
+                                        @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
+                                  
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="offset-2 col-md-10">
+                                        <input type="submit" value="Alta Persona" class="btn btn-outline-primary" />
+                                        @Html.ActionLink("Volver", "inicio", new { htmlAttributes = new { @class = "btn btn-outline-dark" } })
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+    </div>
+</body>
+</html>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/umd/popper.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>

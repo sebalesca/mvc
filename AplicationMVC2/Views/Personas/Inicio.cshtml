@@ -1,0 +1,93 @@
+﻿@model List<AplicationMVC2.Entidad.Personas>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Listado de Personas</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+          
+
+            <div class="col-md-8">
+                @if (TempData["Mensaje"] != null)
+                {
+                    <div id="mensaje" class="alert alert-success">
+                        <strong>Mensaje: </strong> @TempData["Mensaje"]
+                    </div>
+
+                }
+                @if (TempData["Error"] != null)
+                {
+                    <div id="mensaje" class="alert alert-danger">
+                        <strong>Mensaje: </strong> @TempData["Error"]
+                    </div>
+
+                }
+                <div class="card shadow mt-4">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.Nombre</td>
+                                            <td>@item.Direccion</td>
+                                            <td>
+                                                <div class="btn-group btn-group-sm">
+                                                    <a href="@Url.Action("editar","personas", new { id=item.Id})" class="btn btn-outline-dark"><i class="fa fa-edit"></i> Editar</a>
+                                                    <a href="@Url.Action("eliminar","personas", new { id=item.Id})" onclick="return confirm('Confirma?')" class="btn btn-outline-danger"><i class="fa fa-trash"></i> Eliminar</a>
+
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3"> Sin registros...</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="@Url.Action("Alta","Personas")" class="btn btn-block btn-outline-primary"> Nueva Persona</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/umd/popper.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+    setTimeout(function () {
+        $('#mensaje').fadeOut('fast');
+    }, 3000);
+</script>
