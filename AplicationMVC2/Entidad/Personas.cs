@@ -14,10 +14,19 @@ namespace AplicationMVC2.Entidad
     
     public partial class Personas
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Personas()
+        {
+            this.Destinos = new HashSet<Destinos>();
+        }
+    
         public System.Guid Id { get; set; }
         public string Nombre { get; set; }
         public Nullable<int> Edad { get; set; }
         public string Direccion { get; set; }
         public byte[] Foto { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Destinos> Destinos { get; set; }
     }
 }

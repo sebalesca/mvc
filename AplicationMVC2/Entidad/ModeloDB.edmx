@@ -4,7 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PruebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PruebaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Destinos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="id_persona" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="destino" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_presentacion" Type="datetime" />
+          <Property Name="fecha_salida" Type="datetime" />
+          <Property Name="fecha_carga" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Personas">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,11 +26,27 @@
           <Property Name="Direccion" Type="nvarchar" MaxLength="250" />
           <Property Name="Foto" Type="varbinary(max)" />
         </EntityType>
+        <Association Name="FK_Destinos_Personas">
+          <End Role="Personas" Type="Self.Personas" Multiplicity="1" />
+          <End Role="Destinos" Type="Self.Destinos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Destinos">
+              <PropertyRef Name="id_persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PruebaModelStoreContainer">
+          <EntitySet Name="Destinos" EntityType="Self.Destinos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Personas" EntityType="Self.Personas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Destinos_Personas" Association="Self.FK_Destinos_Personas">
+            <End Role="Personas" EntitySet="Personas" />
+            <End Role="Destinos" EntitySet="Destinos" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PruebaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -32,10 +59,40 @@
           <Property Name="Edad" Type="Int32" />
           <Property Name="Direccion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Destinos" Relationship="PruebaModel.FK_Destinos_Personas" FromRole="Personas" ToRole="Destinos" />
         </EntityType>
         <EntityContainer Name="EntidadDB" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Personas" EntityType="Self.Personas" />
+          <EntitySet Name="Destinos" EntityType="PruebaModel.Destinos" />
+          <AssociationSet Name="FK_Destinos_Personas" Association="PruebaModel.FK_Destinos_Personas">
+            <End Role="Personas" EntitySet="Personas" />
+            <End Role="Destinos" EntitySet="Destinos" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Destinos">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Guid" Nullable="false" />
+          <Property Name="destino" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_presentacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_salida" Type="DateTime" Precision="3" />
+          <Property Name="fecha_carga" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="id_persona" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="Personas" Relationship="PruebaModel.FK_Destinos_Personas" FromRole="Destinos" ToRole="Personas" />
+        </EntityType>
+        <Association Name="FK_Destinos_Personas">
+          <End Type="PruebaModel.Personas" Role="Personas" Multiplicity="1" />
+          <End Type="PruebaModel.Destinos" Role="Destinos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personas">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Destinos">
+              <PropertyRef Name="id_persona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -50,6 +107,18 @@
                 <ScalarProperty Name="Edad" ColumnName="Edad" />
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="Foto" ColumnName="Foto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Destinos">
+            <EntityTypeMapping TypeName="PruebaModel.Destinos">
+              <MappingFragment StoreEntitySet="Destinos">
+                <ScalarProperty Name="id_persona" ColumnName="id_persona" />
+                <ScalarProperty Name="fecha_carga" ColumnName="fecha_carga" />
+                <ScalarProperty Name="fecha_salida" ColumnName="fecha_salida" />
+                <ScalarProperty Name="fecha_presentacion" ColumnName="fecha_presentacion" />
+                <ScalarProperty Name="destino" ColumnName="destino" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -26,5 +26,6 @@ namespace AplicationMVC2.Entidad
         }
     
         public virtual DbSet<Personas> Personas { get; set; }
+        public virtual DbSet<Destinos> Destinos { get; set; }
     }
 }

@@ -1,0 +1,72 @@
+﻿@model ICollection<AplicationMVC2.Entidad.Destinos>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Listado de Destinos</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.css" rel="stylesheet" />
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+              destino   
+            </th>
+            <th>
+                fecha_presentacion
+            </th>
+            <th>
+                fecha_salida
+            </th>
+            <th>
+                fecha_carga
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.destino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_presentacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_salida)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha_carga)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Personas.Nombre)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</body>
+</html>
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script src="~/Scripts/umd/popper.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+

@@ -56,7 +56,7 @@
                                                 <div class="btn-group btn-group-sm">
                                                     <a href="@Url.Action("editar","personas", new { id=item.Id})" class="btn btn-outline-dark"><i class="fa fa-edit"></i> Editar</a>
                                                     <a href="@Url.Action("eliminar","personas", new { id=item.Id})" onclick="return confirm('Confirma?')" class="btn btn-outline-danger"><i class="fa fa-trash"></i> Eliminar</a>
-
+                                                    <a href="@Url.Action("inicio","destinos", item )" class="btn btn-info">Destinos</a>
                                                 </div>
                                             </td>
                                         </tr>
